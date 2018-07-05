@@ -2,7 +2,6 @@
   "name": "overwatch-endorsement-api",
   "version": "1.0.0",
   "description": "Scrapes Overwatch player profile page to determine Endorsement levels. Profiles must be public.",
-  "main": "index.js",
   "engines": {
     "node": "10.5.0"
   },
@@ -17,7 +16,10 @@
   },
   "homepage": "https://github.com/au5ton/overwatch-endorsement-api#readme",
   "dependencies": {
+    "express": "^4.16.3",
+    "express-rate-limit": "^2.11.0",
     "jsdom": "^11.11.0",
-    "node-fetch": "^2.1.2"
+    "node-fetch": "^2.1.2",
+    "response-time": "^2.3.2"
   }
 }
