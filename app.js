@@ -20,7 +20,8 @@ app.use(responseTime())
 process.on('unhandledRejection', r => console.error('unhandledRejection: ',r.stack,'\n',r));
 
 // respond with "hello world" when a GET request is made to the homepage
-app.get('/', (req, res) => res.json('The world could use more heroes.'))
+app.get('/', (req, res) => res.sendFile(__dirname+'/index.html'))
+app.get('/api/', (req, res) => res.json('The world could use more heroes.'))
 app.get('/api/:platform/:id', (req, response) => {
     console.log(req.params)
     response.set('X-Source-Code','https://github.com/au5ton/overwatch-endorsement-api');

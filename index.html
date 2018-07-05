@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+        <title>overwatch-endorsement-api</title>
+    </head>
+    <body>
+        <h1><a href="https://github.com/au5ton/overwatch-endorsement-api">overwatch-endorsement-api</a></h1>
+        <p>Use <pre>/api/:platform/:id</pre> to make requests!</p>
+        Platform: 
+        <select name="platform">
+            <option value="pc">PC</option>
+            <option value="xbl">Xbox Live</option>
+            <option value="psn">PSN</option>
+        </select><br>
+        ID (soot#1509): <input type="text" name="battletag"><br>
+        <input id="submit-button" type="button" value="Submit"><br><br>
+        <h3>Endorsement level: <span id="commend-lvl"></span></h3>
+        <h3>Shotcaller: <span id="commend-shot"></span></h3>
+        <h3>Teammate: <span id="commend-team"></span></h3>
+        <h3>Sportsmanship: <span id="commend-sport"></span></h3>
+        <h3>Reported total: <span id="commend-total"></span></h3>
+        Raw: <pre id="api-results"></pre>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/fetch/2.0.4/fetch.min.js"></script>
+        <script>
+            let platform = document.querySelector('select[name="platform"]');
+            let battletag = document.querySelector('input[type="text"]');
+            let output = document.getElementById('api-results');
+            let submit = document.getElementById('submit-button');
+            let endorseLevel = document.getElementById('commend-lvl');
+            let shotcaller = document.getElementById('commend-shot');
+            let teammate = document.getElementById('commend-team');
+            let sportsmanship = document.getElementById('commend-sport');
+            let reportTotal = document.getElementById('commend-total');
+
+            submit.onclick = () => {
+                fetch('/api/'+platform.value+'/'+battletag.value.trim().replace('#','-')).then(res => res.json()).then(json => {
+                    output.innerText = JSON.stringify(json);
+                    endorseLevel.innerText = json['endorsement_level'];
+                    shotcaller.innerText = json['shotcaller_count'];
+                    teammate.innerText = json['teammate_count'];
+                    sportsmanship.innerText = json['sportsmanship_count'];
+                    reportTotal.innerText = json['reported_total'];
+                }).catch(err => {
+                    console.error(err)
+                    output.innerText = 'Error';
+                })
+            };
+
+        </script>
+    </body>
+</html>
